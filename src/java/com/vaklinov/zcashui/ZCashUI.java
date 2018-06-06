@@ -69,6 +69,9 @@ import com.vaklinov.zcashui.ZCashInstallationObserver.DaemonInfo;
 import com.vaklinov.zcashui.ZCashInstallationObserver.InstallationDetectionException;
 import com.vaklinov.zcashui.msg.MessagingPanel;
 
+// Mine
+import mdlaf.*;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Main ZENCash Window.
@@ -544,7 +547,12 @@ public class ZCashUI
             if (os == OS_TYPE.WINDOWS)
             {
             	// Custom Windows L&F and font settings
-            	UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            	try {
+                        UIManager.setLookAndFeel (new MaterialLookAndFeel ());
+                    }
+                catch (UnsupportedLookAndFeelException e) {
+                    e.printStackTrace ();
+                    }
             	
             	// This font looks good but on Windows 7 it misses some chars like the stars...
             	//FontUIResource font = new FontUIResource("Lucida Sans Unicode", Font.PLAIN, 11);
@@ -553,19 +561,28 @@ public class ZCashUI
             {
             	// The MacOS L&F is active by default - the property sets the menu bar Mac style
             	System.setProperty("apple.laf.useScreenMenuBar", "true");
+                UIManager.setLookAndFeel(new MaterialLookAndFeel ());
+
             }
             else
             {            
-	            for (LookAndFeelInfo ui : UIManager.getInstalledLookAndFeels())
-	            {
-	            	Log.info("Available look and feel: " + ui.getName() + " " + ui.getClassName());
-	                if (ui.getName().equals("Nimbus"))
-	                {
-	                	Log.info("Setting look and feel: {0}", ui.getClassName());
-	                    UIManager.setLookAndFeel(ui.getClassName());
-	                    break;
-	                };
-	            }
+	            // for (LookAndFeelInfo ui : UIManager.getInstalledLookAndFeels())
+	            // {
+	            // 	Log.info("Available look and feel: " + ui.getName() + " " + ui.getClassName());
+	            //     if (ui.getName().equals("Nimbus"))
+	            //     {
+	            //     	Log.info("Setting look and feel: {0}", ui.getClassName());
+	            //         UIManager.setLookAndFeel(ui.getClassName());
+	            //         break;
+	            //     };
+	            // }
+                try {
+                        UIManager.setLookAndFeel (new MaterialLookAndFeel ());
+                    }
+                catch (UnsupportedLookAndFeelException e) {
+                    e.printStackTrace ();
+                    }
+
             }
             
             // If zend is currently not running, do a startup of the daemon as a child process
